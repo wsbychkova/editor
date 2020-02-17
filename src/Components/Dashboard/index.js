@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import '../../Styles/react-contextmenu.css'
 
 import picture1 from '../../Assets/images/background1.jpeg';
 import picture2 from '../../Assets/images/background2.jpeg';
@@ -61,9 +62,6 @@ const StyledContextMenu = styled(ContextMenu)`
     width: 250px;
     height: auto;
  `
-const StyledMenuItem = styled(MenuItem)`
-    cursor: pointer;
-    `
 class Dashboard extends Component {
 
     state = {
@@ -81,7 +79,7 @@ class Dashboard extends Component {
 
 
     handleClick = (e, data) => {
-        console.log(data.foo);
+
     }
 
     onDragStart = (ev, id) => {
@@ -127,9 +125,9 @@ class Dashboard extends Component {
             dropped: [],
             fixed: []
         }
+
         titles.forEach((title, index) => {
             textStatus[title.status].push(
-
                 <Text
                     draggable
                     id="draggable"
@@ -141,8 +139,6 @@ class Dashboard extends Component {
                         {title.name}
                     </ContextMenuTrigger>
                 </Text>
-
-
             )
         })
         pictures.forEach((picture, index) => {
@@ -150,7 +146,7 @@ class Dashboard extends Component {
                 <Image
                     url={picture.url}
                     draggable
-                    id="draggable"
+                    id="draggableImage"
                     key={picture.name}
                     isDropped={picture.status === 'dropped' ? true : false}
                     onDragStart={(e) => this.onDragStart(e, picture.name)}
@@ -176,19 +172,16 @@ class Dashboard extends Component {
                         onDragOver={(e) => this.onDragOver(e)}
                         onDrop={(e) => this.onDrop(e, 'dropped')}
                     >
-
                         {picturesStatus.dropped}
                         {textStatus.dropped}
-
                         <StyledContextMenu id="draggable">
-                            <StyledMenuItem onClick={this.handleClick}>
+                            <MenuItem onClick={this.handleClick}>
                                 Copy
-                            </StyledMenuItem>
-                            <hr />
-                            <StyledMenuItem onClick={this.handleClick}>
+                            </MenuItem>
+                            <MenuItem divider />
+                            <MenuItem onClick={this.handleClick}>
                                 Delete
-                            </StyledMenuItem>
-                            <StyledMenuItem divider />
+                            </MenuItem>
                         </StyledContextMenu>
                     </EditResult>
                 </Display>
